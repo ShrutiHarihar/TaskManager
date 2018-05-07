@@ -1,0 +1,145 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          Tasks
+        </div>
+        <div class="row justify-content-center">
+          <div *ngIf="error!=null">
+            <div class="card text-white bg-danger text-center">
+              <div class="card-body">
+                <blockquote class="card-bodyquote">
+                  <p>{{error}}</p>
+                </blockquote>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label class="form-control-label" for="emp">Employee</label>
+            <select id="emp" [(ngModel)]="username" (change)="fetchEmployeeTasks()">
+              <option  *ngFor="let e of employee" [value]="e.username">{{e.username}}</option>
+            </select>
+          </div>
+          <table class="table table-striped" [mfData]="todoLists" #mf="mfDataTable" [(mfSortBy)]="sortBy"
+                 [(mfSortOrder)]="sortOrder"
+                 [(mfRowsOnPage)]="rowsOnPage">
+            <thead>
+            <tr>
+              <th>Title</th>
+              <th>Status</th>
+              <th>Rank</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let todoItem of mf.data">
+              <td>{{todoItem.title}}</td>
+              <td>
+                {{todoItem.status}}
+              </td>
+              <td>{{todoItem.rank}}</td>
+              <td>
+                <div>
+                  <i class="fa fa-pencil fa-lg" title="Add Notes" data-toggle="modal" (click)="fetchTask(todoItem, notesModal)"></i>
+                  <i class="fa fa-file-text-o fa-lg" title="Add Feadback" data-toggle="modal" (click)="fetchTask(todoItem, feedbackModal)"></i>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+              <td>
+                <mfBootstrapPaginator></mfBootstrapPaginator>
+              </td>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+        <!-- <pagination-controls id="listing_pagination" maxSize="5" directionLinks="true" (pageChange)="page = $event"></pagination-controls> -->
+      </div>
+    </div>
+  </div>
+</div>
+<div bsModal #feedbackModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Feedback</h4>
+        <button type="button" class="close" (click)="feedbackModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row justify-content-center">
+          <div *ngIf="modalError!=null">
+            <div class="card text-white bg-danger text-center">
+              <div class="card-body">
+                <blockquote class="card-bodyquote">
+                  <p>{{modalError}}</p>
+                </blockquote>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <table class="table table-striped">
+            <tbody><tr *ngFor = "let fb of selectedTodoList.feedback">
+              <td>{{fb}}</td>
+            </tr></tbody>
+          </table>
+          <div class="form-group">
+            <label class="form-control-label" for="feedback">Enter Feedback</label>
+            <input id="feedback" class="form-control"  type="textarea"  [(ngModel)]="newEntry">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="feedbackModal.hide()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="saveEntry(feedbackModal,true)">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div bsModal #notesModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Notes</h4>
+        <button type="button" class="close" (click)="notesModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row justify-content-center">
+          <div *ngIf="modalError!=null">
+            <div class="card text-white bg-danger text-center">
+              <div class="card-body">
+                <blockquote class="card-bodyquote">
+                  <p>{{modalError}}</p>
+                </blockquote>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <table class="table table-striped">
+            <tbody><tr *ngFor = "let nt of selectedTodoList.notes">
+              <td>{{nt}}</td>
+            </tr></tbody>
+          </table>
+          <div class="form-group">
+            <label class="form-control-label" for="notes">Enter Notes</label>
+            <input id="notes" class="form-control"  type="textarea"  [(ngModel)]="newEntry">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="notesModal.hide()">Close</button>
+        <button type="button" class="btn btn-primary" [disabled]="newEntry==''" (click)="saveEntry(notesModal, false)">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

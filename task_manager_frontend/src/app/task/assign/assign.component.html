@@ -1,0 +1,48 @@
+<div class="row justify-content-center">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header">
+        <i class="fa fa-edit"></i>Add Task
+      </div>
+      <div *ngIf="error!=null">
+        <div *ngFor="let err of error" class="row justify-content-center">
+          <div class="card text-white bg-danger text-center">
+            <div class="card-body">
+              <blockquote class="card-bodyquote">
+                <p>{{err}}</p>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-block">
+        <form class="form-horizontal">
+          <!-- <ul class="list-group">
+          <li class="list-group-item active">Cras justo odio</li>
+          <li class="list-group-item">Dapibus ac facilisis in</li>
+          <li class="list-group-item">Morbi leo risus</li>
+          <li class="list-group-item">Porta ac consectetur ac</li>
+          <li class="list-group-item">Vestibulum at eros</li>
+        </ul> -->
+          <div class="form-group">
+            <label class="form-control-label" for="taskTitle">Task Title</label>
+            <select id="taskTitle" (input)="selectTask($event.target.value)">
+              <option [value]=""></option>
+              <option *ngFor="let t of taskList" [value]="t.id">{{t.title}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" for="emp">Employee</label>
+            <select id="emp" (input)="taskItem.assignedTo = $event.target.value">
+              <option [value]=""></option>
+              <option *ngFor="let e of employee" [value]="e.username">{{e.username}}</option>
+            </select>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" (click)="submit()">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

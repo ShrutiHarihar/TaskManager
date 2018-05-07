@@ -1,0 +1,38 @@
+<header class="app-header navbar">
+  <button class="navbar-toggler d-lg-none" type="button" appMobileSidebarToggler>&#9776;</button>
+  <a class="navbar-brand" href="#">Walmart</a>
+  <ul class="nav navbar-nav mr-auto d-md-down-none">
+    <li class="nav-item">
+      <a class="nav-link navbar-toggler" href="#" appSidebarToggler>&#9776;</a>
+    </li>
+  </ul>
+  <ul class="nav navbar-nav ml-auto">
+    <li>
+      <button type="button" class="btn btn-outline-danger" (click)="logout()">logout</button>
+    </li>
+  </ul>
+</header>
+
+<div class="app-body">
+  <div class="sidebar">
+    <nav class="sidebar-nav">
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['/dashboard']"><i class="icon-speedometer"></i> Dashboard </a>
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['/createTask']"><i class="icon-plus"></i> Create Task </a>
+          <a class="nav-link" routerLinkActive="active" *ngIf="isManager()" [routerLink]="['/assignTask']"><i class="icon-tag"></i> Assign Task </a>
+          <a class="nav-link" routerLinkActive="active" *ngIf="isManager()" [routerLink]="['/viewTask']"><i class="icon-speedometer"></i> View Tasks </a>
+        </li>
+      </ul>
+
+    </nav>
+  </div>
+
+  <!-- Main content -->
+  <main class="main">
+    <div class="container-fluid">
+      <br>
+      <router-outlet></router-outlet>
+    </div><!-- /.conainer-fluid -->
+  </main>
+</div>
