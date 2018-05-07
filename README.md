@@ -34,4 +34,12 @@ Assumptions
     - Every six hours
     - Every twelve hours
 	
+Future Scope
+-------------
+1. Can use spring security to make the task manager system secure.
+2. Can use advanced dynamic scheduling to support recurring tasks of diffrent durations. 
 	
+	
+References
+----------
+http://demo.themewagon.com/preview/free-bootstrap-4-admin-template
